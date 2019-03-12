@@ -1,0 +1,4 @@
+#!/bin/sh
+
+test -z "$1" && { echo "Usage: $0 <windows AD timestamp>"; exit 1; }
+date -r $(($1/10000000-11676009600))

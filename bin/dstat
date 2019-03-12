@@ -1,0 +1,27 @@
+#!/bin/bash
+
+calc() { bc <<<"scale=2; $1 / $2"; }
+(
+echo $'ID\tNAME\tIP\t MEMORY'
+docker ps --no-trunc --format '{{.ID}}:{{.Names}}' |
+    while IFS=: read id name; do
+        ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $id)
+        mem=$(cat /sys/fs/cgroup/memory/docker/$id/memory.usage_in_bytes 2>/dev/null)
+        if ((mem > 536870912))
+        then
+            mem=$(calc "$mem/1073741824")
+            sfx=G
+        elif ((mem > 524288))
+        then
+            mem=$(calc "$mem/1048576")
+            sfx=M
+        elif ((mem > 512))
+        then
+            mem=$(calc "$mem/1024")
+            sfx=k
+        else
+            sfx=""
+        fi
+        printf "%12s\t%s\t\t%s\t%6s%s\n" "${id:0:12}" "$name" "${ip:-N/A}" "${mem:-N/A}" "$sfx"
+    done
+    ) | column -s $'\t' -t

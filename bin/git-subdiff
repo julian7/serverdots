@@ -1,0 +1,22 @@
+#!/bin/bash
+
+rundiff() {
+    pkg="$1"
+    ver="$2"
+    git --git-dir "$pkg" diff "$ver"
+}
+
+package=""
+oldver=""
+git diff "$@" | while read line; do
+    if [[ "$line" =~ ^diff ]]; then
+        package=""
+        oldver=""
+    elif [[ "$line" =~ ^---\ a/(.+)$ ]]; then
+        package=${BASH_REMATCH[1]}
+    elif [[ "$line" =~ ^-Subproject\ commit\ (.+)$ ]]; then
+        oldver=${BASH_REMATCH[1]}
+        rundiff "$package/.git" "$oldver..HEAD"
+    fi
+done
+

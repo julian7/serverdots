@@ -1,0 +1,26 @@
+#!/bin/bash
+
+pid=$1
+fd=$2
+if [[ ! -d /proc/$pid ]]; then
+    echo "no such process: $pid"
+    exit 1
+fi
+
+if [[ "$fd" == "" ]]; then
+    echo "File descriptors of PID $pid:"
+    ls /proc/$pid/fd | while read fd; do
+    fn=$(readlink /proc/$pid/fd/$fd)
+    echo "$fd: $fn"
+done | column
+exit 0
+fi
+size=$(stat -L -c %s /proc/$pid/fd/$fd)
+if ((size == 0)); then
+    echo "N/A: empty file"
+else
+    pos=$(awk '{if(NR==1) print $2}' /proc/$pid/fdinfo/$fd)
+    fn=$(readlink /proc/$pid/fd/$fd)
+    echo $fn: $(dc -e "1k${pos}00 $size/p")%
+fi
+
