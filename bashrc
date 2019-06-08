@@ -11,7 +11,7 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Load configuration source files
-for srcfile ($HOME/.shrc.d/*.bash); do
+for srcfile in $HOME/.shrc.d/*.bash; do
     source $srcfile
 done
 

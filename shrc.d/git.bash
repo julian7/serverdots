@@ -11,5 +11,6 @@ __git_set_prompt() {
         oldpwd="$PWD"
         __set_current_git_branch
     fi
-    export PS1=$(printf "$GITPROMPT" __git_prompt_info($GITPROMPT_DETAILS))
+    prompt_info=$(__git_prompt_info "$GITPROMPT_DETAILS")
+    export PS1=$(printf "$GITPROMPT" "$prompt_info")
 }
