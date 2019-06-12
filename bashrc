@@ -8,7 +8,6 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s checkwinsize
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Load configuration source files
 for srcfile in $HOME/.shrc.d/*.sh $HOME/.shrc.d/*.bash; do
