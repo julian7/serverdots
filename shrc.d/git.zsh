@@ -1,5 +1,3 @@
-source ~/.shrc.d/git.sh
-
 chpwd_functions=('__set_current_git_branch' ${chpwd_functions:#__set_current_git_branch})
 preexec_functions=('__force_update_git_vars' ${precmd_functions:#__force_update_git_vars})
 precmd_functions=('__update_git_vars' ${precmd_functions:#__update_git_vars})

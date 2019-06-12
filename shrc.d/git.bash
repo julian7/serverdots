@@ -1,5 +1,3 @@
-source ~/.shrc.d/git.sh
-
 __git_install_prompt() {
     GITPROMPT="$1"
     GITPROMPT_DETAILS="$2"
