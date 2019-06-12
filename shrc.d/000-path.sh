@@ -20,4 +20,7 @@ addpath() {
 }
 
 PATH=$( echo "$PATH" |
+addpath $HOME/.bin |
 addpath $HOME/bin)
+
+export PATH
