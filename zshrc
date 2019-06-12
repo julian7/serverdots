@@ -19,7 +19,7 @@ whichX() {
 whichX ack-grep && alias ack=ack-grep
 
 # Load configuration source files
-for srcfile ($HOME/.shrc.d/*.zsh) source $srcfile
+for srcfile ($HOME/.shrc.d/*.sh $HOME/.shrc.d/*.zsh) source $srcfile
 
 # Load local customizations
 test -f $HOME/.zshrc.local && source $HOME/.zshrc.local
