@@ -21,6 +21,8 @@ if ((size == 0)); then
 else
     pos=$(awk '{if(NR==1) print $2}' /proc/$pid/fdinfo/$fd)
     fn=$(readlink /proc/$pid/fd/$fd)
+    basispoint=$((pos*10000/size))
     echo $fn: $(dc -e "1k${pos}00 $size/p")%
+    printf "%s: %.1f\n" ${fn} $((basispoint/100)).$((basispoint%100))
 fi
 
