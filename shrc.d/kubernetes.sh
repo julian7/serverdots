@@ -1,2 +1,2 @@
 alias k=kubectl
-alian ka=kubeadm
+alias ka=kubeadm
